@@ -8,19 +8,20 @@ export default function Header() {
   const location = useLocation();
 
   const routeTitles: Record<string, string> = {
-    "/": "> Dashboard",
+    "/": "> Painel",
     "/products": "> Produtos",
+    "/category": "> Categoria",
   };
 
   const currentTitle = routeTitles[location.pathname] || "";
 
   return (
     <header
-      className={`flex items-center px-10 py-3 bg-transparent border-b 
+      className={`flex items-center px-10 py-3 bg-transparent border-b mb-8
       ${
         theme === "dark"
-          ? "border-b-SurfaceLightTheme/50"
-          : "border-b-SurfaceDarkTheme/50"
+          ? "border-b-SurfaceLightTheme/40"
+          : "border-b-SurfaceDarkTheme/40"
       }`}
     >
       <div className="flex items-center gap-5 flex-1">

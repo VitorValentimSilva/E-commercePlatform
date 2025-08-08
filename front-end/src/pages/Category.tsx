@@ -1,14 +1,13 @@
+import { TbCategory2, TbTag } from "react-icons/tb";
 import { FiPlus } from "react-icons/fi";
-import { TbTag } from "react-icons/tb";
-import { LuBoxes } from "react-icons/lu";
 import SectionBaseList from "../components/SectionBaseList";
 
-export default function Products() {
-  const infoCardProducts = [
+export default function Category() {
+  const infoCardCategory = [
     {
-      title: "Total de Produtos",
+      title: "Total de Categorias",
       info: "4",
-      icon: <LuBoxes className="w-6 h-6" />,
+      icon: <TbCategory2 className="w-6 h-6" />,
     },
     {
       title: "Ativos",
@@ -17,10 +16,10 @@ export default function Products() {
     },
     {
       title: "Adicionado este mês",
-      info: "2",
+      info: "3",
       icon: <FiPlus className="w-6 h-6" />,
     },
   ];
 
-  return <SectionBaseList cards={infoCardProducts} />;
+  return <SectionBaseList cards={infoCardCategory} />;
 }

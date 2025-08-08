@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
-import { TbHome } from "react-icons/tb";
+import { TbHome, TbHomeFilled, TbTags, TbTagsFilled } from "react-icons/tb";
 import { BsBoxes } from "react-icons/bs";
+import { LuBoxes } from "react-icons/lu";
 
 export default function Sidebar() {
   const { theme } = useTheme();
@@ -21,8 +22,8 @@ export default function Sidebar() {
       className={`w-64 h-screen p-5 border-r
       ${
         theme === "dark"
-          ? "bg-SurfaceDarkTheme border-r-SurfaceLightTheme/50"
-          : "bg-SurfaceLightTheme border-r-SurfaceDarkTheme/50"
+          ? "bg-SurfaceDarkTheme border-r-SurfaceLightTheme/40"
+          : "bg-SurfaceLightTheme border-r-SurfaceDarkTheme/40"
       }`}
     >
       <h1
@@ -33,11 +34,42 @@ export default function Sidebar() {
       </h1>
       <nav className="flex flex-col gap-2">
         <NavLink to="/" className={linkClasses} end>
-          <TbHome className="w-5 h-5" /> Dashboard
+          {({ isActive }) => (
+            <>
+              {isActive ? (
+                <TbHomeFilled className="w-5 h-5" />
+              ) : (
+                <TbHome className="w-5 h-5" />
+              )}
+              Painel
+            </>
+          )}
         </NavLink>
 
         <NavLink to="/products" className={linkClasses}>
-          <BsBoxes className="w-5 h-5" /> Products
+          {({ isActive }) => (
+            <>
+              {isActive ? (
+                <LuBoxes className="w-5.5 h-5.5" />
+              ) : (
+                <BsBoxes className="w-5 h-5" />
+              )}
+              Produtos
+            </>
+          )}
+        </NavLink>
+
+        <NavLink to="/category" className={linkClasses}>
+          {({ isActive }) => (
+            <>
+              {isActive ? (
+                <TbTagsFilled className="w-5 h-5" />
+              ) : (
+                <TbTags className="w-5 h-5" />
+              )}
+              Categoria
+            </>
+          )}
         </NavLink>
       </nav>
     </aside>
