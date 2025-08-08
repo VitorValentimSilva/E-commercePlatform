@@ -1,13 +1,16 @@
-import express from "express";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express = require("express");
+const routes = require("./routes");
+const errorHandler = require("./middlewares/error.handler");
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.get("/", (req, res) => {
-    res.send("Welcome to the E-commerce Platform API");
-});
+app.use("/api", routes);
+app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-export default app;
+module.exports = app;
 //# sourceMappingURL=app.js.map
