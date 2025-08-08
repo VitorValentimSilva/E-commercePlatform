@@ -1,10 +1,16 @@
+import { Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Layout from "./pages/Layout";
+import Products from "./pages/Products";
+
 function App() {
   return (
-    <>
-      <div>
-        <h1 className="text-red-600">Ola Mundo!</h1>
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="products" element={<Products />} />
+      </Route>
+    </Routes>
   );
 }
 
