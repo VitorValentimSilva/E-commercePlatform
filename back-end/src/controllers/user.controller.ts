@@ -23,6 +23,39 @@ const userController = {
       next(err);
     }
   },
+
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const p = await service.create(req.body);
+      res.json({ message: "Usuário criado com sucesso", user: p });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const p = await service.update(req.params.id, req.body);
+      if (!p)
+        return res.status(404).json({ message: "Usuário não encontrado" });
+
+      res.json({ message: "Usuário atualizado com sucesso", user: p });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const p = await service.delete(req.params.id);
+      if (!p)
+        return res.status(404).json({ message: "Usuário não encontrado" });
+
+      res.json({ message: "Usuário removido com sucesso" });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 module.exports = userController;

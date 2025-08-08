@@ -1,9 +1,9 @@
-const z = require("zod");
+import z = require("zod");
 
 const userSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
   email: z.email("Email inválido"),
-  age: z.number().int().positive().optional(),
+  name: z.string().min(1, "Nome é obrigatório"),
+  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
 });
 
 module.exports = userSchema;

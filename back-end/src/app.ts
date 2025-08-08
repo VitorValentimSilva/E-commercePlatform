@@ -1,9 +1,9 @@
 import express = require("express");
+import swaggerDefinition = require("./config/swagger.config");
 
 const routes = require("./routes");
 const errorHandler = require("./middlewares/errorHandler");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDefinition = require("./config/swagger.config");
 
 const app = express();
 const PORT = process.env.PORT || 3000;

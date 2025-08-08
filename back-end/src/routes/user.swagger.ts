@@ -12,7 +12,7 @@ const userSwagger = {
             "application/json": {
               schema: {
                 type: "array",
-                items: { $ref: "#/components/schemas/User" },
+                items: { $ref: "#/components/schemas/UserAllFields" },
               },
               examples: {
                 exemplo1: {
@@ -40,6 +40,47 @@ const userSwagger = {
         },
       },
     },
+    post: {
+      summary: "Cria um novo usuário",
+      description: "Cria um novo usuário com os dados fornecidos.",
+      tags: ["Usuários"],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/User" },
+          },
+        },
+      },
+      responses: {
+        "201": {
+          description: "Usuário criado com sucesso",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                    example: "Usuário criado com sucesso",
+                  },
+                  user: { $ref: "#/components/schemas/UserAllFields" },
+                },
+                required: ["email", "password", "name"],
+              },
+            },
+          },
+        },
+        "400": {
+          description: "Dados inválidos",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
   },
   "/user/{id}": {
     get: {
@@ -60,7 +101,97 @@ const userSwagger = {
           description: "Usuário encontrado",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/User" },
+              schema: { $ref: "#/components/schemas/UserAllFields" },
+            },
+          },
+        },
+        "404": {
+          description: "Usuário não encontrado",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
+    put: {
+      summary: "Atualiza um usuário existente",
+      description: "Atualiza os dados de um usuário específico pelo ID.",
+      tags: ["Usuários"],
+      parameters: [
+        {
+          in: "path",
+          name: "id",
+          required: true,
+          schema: { type: "integer", format: "int32" },
+          description: "ID numérico do usuário a ser atualizado",
+        },
+      ],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/User" },
+          },
+        },
+      },
+      responses: {
+        "200": {
+          description: "Usuário atualizado com sucesso",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                    example: "Usuário atualizado com sucesso",
+                  },
+                  user: { $ref: "#/components/schemas/UserAllFields" },
+                },
+              },
+            },
+          },
+        },
+        "404": {
+          description: "Usuário não encontrado",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
+    delete: {
+      summary: "Remove um usuário pelo ID",
+      description: "Remove um usuário específico pelo identificador.",
+      tags: ["Usuários"],
+      parameters: [
+        {
+          in: "path",
+          name: "id",
+          required: true,
+          schema: { type: "integer", format: "int32" },
+          description: "ID numérico do usuário a ser removido",
+        },
+      ],
+      responses: {
+        "204": {
+          description: "Usuário removido com sucesso",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                    example: "Usuário removido com sucesso",
+                  },
+                },
+                required: ["message"],
+              },
             },
           },
         },
@@ -77,7 +208,7 @@ const userSwagger = {
   },
   components: {
     schemas: {
-      User: {
+      UserAllFields: {
         type: "object",
         properties: {
           id: { type: "integer", example: 1 },
@@ -90,6 +221,15 @@ const userSwagger = {
             example: "2023-10-01T12:00:00Z",
           },
         },
+      },
+      User: {
+        type: "object",
+        properties: {
+          email: { type: "string", example: "joao@email.com" },
+          password: { type: "string", example: "@Joao123" },
+          name: { type: "string", example: "João Silva" },
+        },
+        required: ["email", "password", "name"],
       },
       ErrorResponse: {
         type: "object",

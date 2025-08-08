@@ -21,3 +21,34 @@ model User {
   name      String?
   createdAt DateTime @default(now())
 }
+
+model Category {
+  id            Int        @id @default(autoincrement())
+  name          String
+  parentId      Int? 
+  parent        Category?  @relation("CategoryChildren", fields: [parentId], references: [id])
+  children      Category[] @relation("CategoryChildren")
+  path          String?   
+  level         Int        @default(0)
+  order         Int        @default(0)
+  isActive      Boolean    @default(true)
+  imageUrl      String?
+  metaTitle     String?
+  metaDescription String?
+  products      Product[]  @relation("ProductCategories")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([parentId])
+  @@index([path])
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  price       Float
+  stock       Int       @default(0)
+  categories  Category[] @relation("ProductCategories")
+  createdAt   DateTime  @default(now())
+}
