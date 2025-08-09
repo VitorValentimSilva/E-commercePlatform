@@ -10,7 +10,7 @@ export function useAuth() {
   }
 
   async function login(data: LoginData) {
-    const res = await api.post("/auth/login", data);
+    const res = await api.post("/user/login", data);
     return res.data;
   }
 

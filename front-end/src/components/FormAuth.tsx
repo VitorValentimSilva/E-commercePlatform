@@ -125,7 +125,10 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
         </div>
 
         {formErrors.general && (
-          <div style={{ color: "red", marginBottom: "1rem" }}>
+          <div
+            className={`mb-1
+            ${theme === "dark" ? "text-RedDarkTheme" : "text-RedLightTheme"}`}
+          >
             {formErrors.general}
           </div>
         )}
