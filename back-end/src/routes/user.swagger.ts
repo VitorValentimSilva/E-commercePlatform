@@ -21,15 +21,17 @@ const userSwagger = {
                     {
                       id: 1,
                       email: "joao@email.com",
+                      nameFull: "João Silva",
+                      namePlace: "joaosilva",
                       password: "@Joao123",
-                      name: "João Silva",
                       createdAt: "2023-10-01T12:00:00Z",
                     },
                     {
                       id: 2,
                       email: "maria@email.com",
+                      nameFull: "Maria Souza",
+                      namePlace: "mariasouza",
                       password: "@Maria123",
-                      name: "Maria Souza",
                       createdAt: "2023-10-02T12:00:00Z",
                     },
                   ],
@@ -66,7 +68,7 @@ const userSwagger = {
                   },
                   user: { $ref: "#/components/schemas/UserAllFields" },
                 },
-                required: ["email", "password", "name"],
+                required: ["email", "nameFull", "namePlace", "password"],
               },
             },
           },
@@ -213,8 +215,9 @@ const userSwagger = {
         properties: {
           id: { type: "integer", example: 1 },
           email: { type: "string", example: "joao@email.com" },
+          nameFull: { type: "string", example: "João Silva" },
+          namePlace: { type: "string", example: "joaosilva" },
           password: { type: "string", example: "@Joao123" },
-          name: { type: "string", example: "João Silva" },
           createdAt: {
             type: "string",
             format: "date-time",
@@ -226,10 +229,11 @@ const userSwagger = {
         type: "object",
         properties: {
           email: { type: "string", example: "joao@email.com" },
+          nameFull: { type: "string", example: "João Silva" },
+          namePlace: { type: "string", example: "joaosilva" },
           password: { type: "string", example: "@Joao123" },
-          name: { type: "string", example: "João Silva" },
         },
-        required: ["email", "password", "name"],
+        required: ["email", "nameFull", "namePlace", "password"],
       },
       ErrorResponse: {
         type: "object",
