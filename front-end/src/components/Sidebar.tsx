@@ -33,7 +33,7 @@ export default function Sidebar() {
         E-commerce Platform
       </h1>
       <nav className="flex flex-col gap-2">
-        <NavLink to="/" className={linkClasses} end>
+        <NavLink to="/adm" className={linkClasses} end>
           {({ isActive }) => (
             <>
               {isActive ? (
@@ -46,7 +46,7 @@ export default function Sidebar() {
           )}
         </NavLink>
 
-        <NavLink to="/products" className={linkClasses}>
+        <NavLink to="/adm/products" className={linkClasses}>
           {({ isActive }) => (
             <>
               {isActive ? (
@@ -59,7 +59,7 @@ export default function Sidebar() {
           )}
         </NavLink>
 
-        <NavLink to="/category" className={linkClasses}>
+        <NavLink to="/adm/category" className={linkClasses}>
           {({ isActive }) => (
             <>
               {isActive ? (

@@ -8,9 +8,9 @@ export default function Header() {
   const location = useLocation();
 
   const routeTitles: Record<string, string> = {
-    "/": "> Painel",
-    "/products": "> Produtos",
-    "/category": "> Categoria",
+    "/adm": "> Painel",
+    "/adm/products": "> Produtos",
+    "/adm/category": "> Categoria",
   };
 
   const currentTitle = routeTitles[location.pathname] || "";

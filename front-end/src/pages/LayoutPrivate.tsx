@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { useTheme } from "../hooks/useTheme";
 
-export default function Layout() {
+export default function LayoutPrivate() {
   const { theme } = useTheme();
 
   return (
