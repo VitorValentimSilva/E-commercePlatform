@@ -6,6 +6,7 @@ interface InputProps {
   type: string;
   placeholder?: string;
   required?: boolean;
+  error?: string;
 }
 
 export default function Input({
@@ -14,6 +15,7 @@ export default function Input({
   type,
   placeholder,
   required,
+  error,
 }: InputProps) {
   const { theme } = useTheme();
 
@@ -26,6 +28,7 @@ export default function Input({
       >
         {name}
       </label>
+
       <input
         type={type}
         name={id}
@@ -39,6 +42,15 @@ export default function Input({
             : "bg-InputLightTheme text-TextLightTheme border-SurfaceDarkTheme/60"
         }`}
       />
+
+      {error && (
+        <span
+          className={`text-sm mt-1
+          ${theme === "dark" ? "text-RedDarkTheme" : "text-RedLightTheme"}`}
+        >
+          {error}
+        </span>
+      )}
     </div>
   );
 }

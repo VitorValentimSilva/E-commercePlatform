@@ -1,6 +1,9 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
 import Input from "./Input";
+import { useAuth } from "../hooks/useAuth";
+import { useState } from "react";
+import { formAuthHandler } from "../handlers/formAuthHandler";
 
 interface FormAuthProps {
   title: string;
@@ -10,6 +13,9 @@ interface FormAuthProps {
 
 export default function FormAuth({ title, description, type }: FormAuthProps) {
   const { theme } = useTheme();
+  const { register, login } = useAuth();
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const navigate = useNavigate();
 
   return (
     <div
@@ -41,8 +47,10 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
       </div>
 
       <Form
-        method="post"
-        action="/adm"
+        method={type === "login" ? "post" : "get"}
+        onSubmit={(e) =>
+          formAuthHandler(e, type, { login, register }, setFormErrors, navigate)
+        }
         className="w-full my-6 flex flex-col gap-7"
       >
         <div className="flex flex-col gap-5">
@@ -54,14 +62,16 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
                 type="email"
                 placeholder="Digite seu email"
                 required={true}
+                error={formErrors.email}
               />
 
               <Input
                 name="Senha"
-                id="senha"
+                id="password"
                 type="password"
                 placeholder="Digite sua senha"
                 required={true}
+                error={formErrors.password}
               />
             </>
           ) : (
@@ -72,6 +82,7 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
                 type="text"
                 placeholder="Digite seu nome completo"
                 required={true}
+                error={formErrors.nameFull}
               />
 
               <Input
@@ -80,6 +91,7 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
                 type="text"
                 placeholder="Digite o nome da loja"
                 required={true}
+                error={formErrors.namePlace}
               />
 
               <Input
@@ -88,14 +100,16 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
                 type="email"
                 placeholder="Digite seu email"
                 required={true}
+                error={formErrors.email}
               />
 
               <Input
                 name="Senha"
-                id="senha"
+                id="password"
                 type="password"
                 placeholder="Digite sua senha"
                 required={true}
+                error={formErrors.password}
               />
 
               <Input
@@ -104,10 +118,17 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
                 type="password"
                 placeholder="Confirme sua senha"
                 required={true}
+                error={formErrors.confirmPassword}
               />
             </>
           )}
         </div>
+
+        {formErrors.general && (
+          <div style={{ color: "red", marginBottom: "1rem" }}>
+            {formErrors.general}
+          </div>
+        )}
 
         <div>
           <button
