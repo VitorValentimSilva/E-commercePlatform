@@ -11,5 +11,6 @@ router.get("/:id", userController.getById);
 router.post("/", validateBody(userSchema), userController.create);
 router.put("/:id", validateBody(userSchema), userController.update);
 router.delete("/:id", userController.delete);
+router.post("/login", userController.login);
 
 module.exports = router;

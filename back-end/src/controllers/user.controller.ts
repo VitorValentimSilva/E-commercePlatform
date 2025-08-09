@@ -56,6 +56,16 @@ const userController = {
       next(err);
     }
   },
+
+  async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
+      const user = await service.login(email, password);
+      res.json({ message: "Login realizado com sucesso", user });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 module.exports = userController;

@@ -208,6 +208,56 @@ const userSwagger = {
       },
     },
   },
+  "/user/login": {
+    post: {
+      summary: "Autentica um usuário",
+      description: "Realiza o login do usuário com email e senha.",
+      tags: ["Usuários"],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                email: { type: "string", example: "joao@email.com" },
+                password: { type: "string", example: "@Joao123" },
+              },
+              required: ["email", "password"],
+            },
+          },
+        },
+      },
+      responses: {
+        "200": {
+          description: "Login realizado com sucesso",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                    example: "Login realizado com sucesso",
+                  },
+                  user: { $ref: "#/components/schemas/UserAllFields" },
+                },
+                required: ["message", "user"],
+              },
+            },
+          },
+        },
+        "401": {
+          description: "Email ou senha inválidos",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
+  },
   components: {
     schemas: {
       UserAllFields: {

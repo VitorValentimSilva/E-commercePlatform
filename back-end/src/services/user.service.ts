@@ -38,6 +38,18 @@ class UserService {
       where: { id: Number(id) },
     });
   }
+
+  async login(email: string, password: string) {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user || user.password !== password) {
+      throw new Error("Email ou senha inválidos");
+    }
+
+    return user;
+  }
 }
 
 module.exports = UserService;
