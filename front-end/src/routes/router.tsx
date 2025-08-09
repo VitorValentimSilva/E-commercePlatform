@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Products from "../pages/Products";
 import Category from "../pages/Category";
 import PagesAuth from "../pages/PagesAuth";
+import RequireAuth from "../components/RequireAuth";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/adm",
-    element: <LayoutPrivate />,
+    element: (
+      <RequireAuth>
+        <LayoutPrivate />
+      </RequireAuth>
+    ),
     children: [
       { index: true, element: <Dashboard /> },
       { path: "products", element: <Products /> },

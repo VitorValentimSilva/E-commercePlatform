@@ -1,4 +1,4 @@
-import type { LoginData, RegisterData } from "../types/userType";
+import type { LoginData, RegisterData, UserType } from "../types/userType";
 import { loginSchema, registerSchema } from "../schemas/userSchema";
 import z from "zod";
 
@@ -8,9 +8,11 @@ export async function formAuthHandler(
   {
     login,
     register,
+    setUser,
   }: {
-    login: (data: LoginData) => Promise<void>;
-    register: (data: RegisterData) => Promise<void>;
+    login: (data: LoginData) => Promise<UserType>;
+    register: (data: RegisterData) => Promise<UserType>;
+    setUser: (user: UserType | null) => void;
   },
   setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>,
   navigate: (path: string) => void
@@ -47,12 +49,16 @@ export async function formAuthHandler(
 
   try {
     if (type === "login") {
-      await login(data as unknown as LoginData);
+      const userData = await login(data as unknown as LoginData);
+      setUser(userData);
       navigate("/adm");
     } else {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword: _confirmPassword, ...dataWithoutConfirm } = data;
-      await register(dataWithoutConfirm as unknown as RegisterData);
+      const userData = await register(
+        dataWithoutConfirm as unknown as RegisterData
+      );
+      setUser(userData);
       navigate("/adm");
     }
   } catch (error: unknown) {

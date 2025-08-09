@@ -1,7 +1,7 @@
 import { Form, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
 import Input from "./Input";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth, useAuthContext } from "../hooks/useAuth";
 import { useState } from "react";
 import { formAuthHandler } from "../handlers/formAuthHandler";
 
@@ -16,6 +16,7 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
   const { register, login } = useAuth();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
+  const { setUser } = useAuthContext();
 
   return (
     <div
@@ -49,7 +50,7 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
       <Form
         method={type === "login" ? "post" : "get"}
         onSubmit={(e) =>
-          formAuthHandler(e, type, { login, register }, setFormErrors, navigate)
+          formAuthHandler(e, type, { login, register, setUser }, setFormErrors, navigate)
         }
         className="w-full my-6 flex flex-col gap-7"
       >

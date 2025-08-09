@@ -1,12 +1,11 @@
 import { createContext } from "react";
-import type { RegisterData } from "../types/userType";
+import type { UserType } from "../types/userType";
 
 interface AuthContextType {
-  user: RegisterData | null;
-  setUser: (user: RegisterData | null) => void;
+  user: UserType | null;
+  setUser: (user: UserType | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
-
