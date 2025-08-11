@@ -11,7 +11,7 @@ export interface LoginData {
 }
 
 export interface CoreUser {
-  id: string;
+  id: number;
   nameFull: string;
   namePlace: string;
   email: string;

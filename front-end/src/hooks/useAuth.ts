@@ -14,7 +14,15 @@ export function useAuth() {
     return res.data as UserType;
   }
 
-  return { register, login };
+  async function deleteUser(
+    id: number,
+    data?: unknown
+  ): Promise<{ message: string }> {
+    const res = await api.delete(`/user/${id}`, { data });
+    return res.data;
+  }
+
+  return { register, login, deleteUser };
 }
 
 export function useAuthContext() {

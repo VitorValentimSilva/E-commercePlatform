@@ -1,15 +1,36 @@
 import { useState } from "react";
-import { useAuthContext } from "../hooks/useAuth";
+import { useAuth, useAuthContext } from "../hooks/useAuth";
 import { useTheme } from "../hooks/useTheme";
 import NavProfile from "./NavProfile";
 import FormEditUser from "./FormEditUser";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const { theme } = useTheme();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState("Perfil");
+  const { deleteUser } = useAuth();
 
   const infoNav = [{ title: "Perfil" }, { title: "Apagar Conta" }];
+
+  async function handleDelete() {
+    if (!user?.user?.id) return;
+
+    const confirmDelete = window.confirm(
+      "Tem certeza que deseja apagar sua conta?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const result = await deleteUser(user.user.id);
+      alert(result.message);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao apagar conta");
+    }
+  }
 
   return (
     <section className="flex flex-col gap-8">
@@ -124,6 +145,7 @@ export default function Profile() {
               </p>
 
               <button
+                onClick={handleDelete}
                 className={`px-6 py-2 rounded mt-5 cursor-pointer font-semibold
                 ${
                   theme === "dark"
