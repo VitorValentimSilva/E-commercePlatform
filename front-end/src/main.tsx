@@ -5,12 +5,15 @@ import { ThemeProvider } from "./contexts/ThemeProvider.tsx";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/router.tsx";
 import { AuthProvider } from "./contexts/AuthProvider.tsx";
+import { SidebarProvider } from "./contexts/SidebarProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <SidebarProvider>
+          <RouterProvider router={router} />
+        </SidebarProvider>
       </AuthProvider>
     </ThemeProvider>
   </StrictMode>

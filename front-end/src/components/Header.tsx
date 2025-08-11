@@ -2,10 +2,12 @@ import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 import { useTheme } from "../hooks/useTheme";
 import { FiSidebar } from "react-icons/fi";
 import { NavLink, useLocation } from "react-router-dom";
+import { useSidebar } from "../hooks/useSidebar";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const { collapsed, toggleSidebar } = useSidebar();
 
   const routeTitles: Record<string, string> = {
     "/adm": "> Painel",
@@ -26,6 +28,8 @@ export default function Header() {
     >
       <div className="flex items-center gap-5 flex-1">
         <button
+          onClick={toggleSidebar}
+          aria-expanded={collapsed}
           className={`cursor-pointer rounded-xl p-1.5 transition-transform duration-300 hover:scale-105
           ${
             theme === "dark"
