@@ -1,16 +1,20 @@
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 import { useTheme } from "../hooks/useTheme";
-import { FiSidebar } from "react-icons/fi";
+import { FiLogOut, FiSidebar, FiUser } from "react-icons/fi";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSidebar } from "../hooks/useSidebar";
 import { useAuthContext } from "../hooks/useAuth";
+import { useEffect, useRef, useState } from "react";
+import { th } from "zod/locales";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const { collapsed, toggleSidebar } = useSidebar();
   const { user } = useAuthContext();
-console.log("Header user:", user);
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const routeTitles: Record<string, string> = {
     "/adm": "> Painel",
     "/adm/products": "> Produtos",
@@ -18,6 +22,19 @@ console.log("Header user:", user);
   };
 
   const currentTitle = routeTitles[location.pathname] || "";
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header
@@ -51,7 +68,7 @@ console.log("Header user:", user);
         </p>
       </div>
 
-      <div>
+      <div className="flex items-center gap-5">
         <button
           onClick={toggleTheme}
           aria-label="Toggle theme"
@@ -69,9 +86,81 @@ console.log("Header user:", user);
           )}
         </button>
 
-        <button>
-            <p>{user?.nameFull}</p>
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setOpen(!open)}
+            className={`cursor-pointer w-8 h-8 flex items-center justify-center rounded-full font-medium
+            ${
+              theme === "dark"
+                ? "bg-SurfaceLightTheme/30 text-TextDarkTheme hover:bg-SecondaryDarkTheme"
+                : "bg-SurfaceDarkTheme/30 text-TextLightTheme hover:bg-SecondaryLightTheme"
+            }`}
+          >
+            {user?.nameFull?.charAt(0).toUpperCase()}
+          </button>
+
+          {open && (
+            <div
+              className={`absolute right-0 mt-2 w-80 rounded-lg shadow-lg overflow-hidden border
+              ${
+                theme === "dark"
+                  ? "bg-SurfaceDarkTheme border-SurfaceLightTheme/40"
+                  : "bg-SurfaceLightTheme border-SurfaceDarkTheme/40"
+              }`}
+            >
+              <div
+                className={`flex items-center gap-4 px-4 py-3 border-b
+                ${
+                  theme === "dark"
+                    ? "border-SurfaceLightTheme/40"
+                    : "border-SurfaceDarkTheme/40"
+                }`}
+              >
+                <div
+                  className={`w-8 h-8 flex items-center justify-center rounded-full font-medium
+                  ${
+                    theme === "dark"
+                      ? "bg-SurfaceLightTheme/30 text-TextDarkTheme"
+                      : "bg-SurfaceDarkTheme/30 text-TextLightTheme"
+                  }`}
+                >
+                  {user?.nameFull?.charAt(0).toUpperCase()}
+                </div>
+                <span
+                  className={`font-semibold text-base
+                  ${
+                    theme === "dark"
+                      ? "text-TextDarkTheme"
+                      : "text-TextLightTheme"
+                  }`}
+                >
+                  {user?.nameFull}
+                </span>
+              </div>
+
+              <button
+                className={`flex items-center gap-3 w-full px-4 py-2
+                ${
+                  theme === "dark"
+                    ? "text-TextDarkTheme hover:bg-SecondaryDarkTheme/20"
+                    : "text-TextLightTheme hover:bg-SecondaryLightTheme/20"
+                }`}
+              >
+                <FiUser /> Sua Conta
+              </button>
+              <button
+                className={`flex items-center gap-3 w-full px-4 py-2
+                ${
+                  theme === "dark"
+                    ? "text-TextDarkTheme hover:bg-SecondaryDarkTheme/20"
+                    : "text-TextLightTheme hover:bg-SecondaryLightTheme/20"
+                }`}
+              >
+                <FiLogOut /> Sair da Conta
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
