@@ -18,4 +18,4 @@ export interface CoreUser {
   createdAt: Date | string;
 }
 
-export type UserType = CoreUser | null;
+export type UserType = {user: CoreUser} | null;

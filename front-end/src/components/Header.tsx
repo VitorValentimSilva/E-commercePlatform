@@ -1,17 +1,17 @@
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 import { useTheme } from "../hooks/useTheme";
 import { FiLogOut, FiSidebar, FiUser } from "react-icons/fi";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSidebar } from "../hooks/useSidebar";
 import { useAuthContext } from "../hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
-import { th } from "zod/locales";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const { collapsed, toggleSidebar } = useSidebar();
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +35,11 @@ export default function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  function handleLogout() {
+    setUser(null);
+    navigate("/");
+  }
 
   return (
     <header
@@ -96,7 +101,7 @@ export default function Header() {
                 : "bg-SurfaceDarkTheme/30 text-TextLightTheme hover:bg-SecondaryLightTheme"
             }`}
           >
-            {user?.nameFull?.charAt(0).toUpperCase()}
+            {user?.user.nameFull.charAt(0).toUpperCase()}
           </button>
 
           {open && (
@@ -124,7 +129,7 @@ export default function Header() {
                       : "bg-SurfaceDarkTheme/30 text-TextLightTheme"
                   }`}
                 >
-                  {user?.nameFull?.charAt(0).toUpperCase()}
+                  {user?.user.nameFull.charAt(0).toUpperCase()}
                 </div>
                 <span
                   className={`font-semibold text-base
@@ -134,7 +139,7 @@ export default function Header() {
                       : "text-TextLightTheme"
                   }`}
                 >
-                  {user?.nameFull}
+                  {user?.user.nameFull}
                 </span>
               </div>
 
@@ -149,6 +154,7 @@ export default function Header() {
                 <FiUser /> Sua Conta
               </button>
               <button
+                onClick={handleLogout}
                 className={`flex items-center gap-3 w-full px-4 py-2
                 ${
                   theme === "dark"
