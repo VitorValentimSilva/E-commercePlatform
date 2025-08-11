@@ -144,6 +144,7 @@ export default function Header() {
               </div>
 
               <button
+                onClick={() => navigate("/adm/profile")}
                 className={`flex items-center gap-3 w-full px-4 py-2
                 ${
                   theme === "dark"

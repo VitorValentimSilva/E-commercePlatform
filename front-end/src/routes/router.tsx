@@ -6,6 +6,7 @@ import Products from "../pages/Products";
 import Category from "../pages/Category";
 import PagesAuth from "../pages/PagesAuth";
 import RequireAuth from "../components/RequireAuth";
+import Profile from "../components/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "products", element: <Products /> },
       { path: "category", element: <Category /> },
+      { path: "profile", element: <Profile /> },
     ],
   },
 ]);

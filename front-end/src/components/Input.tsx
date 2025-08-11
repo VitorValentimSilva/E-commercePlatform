@@ -7,6 +7,7 @@ interface InputProps {
   placeholder?: string;
   required?: boolean;
   error?: string;
+  defaultValue?: string;
 }
 
 export default function Input({
@@ -16,11 +17,12 @@ export default function Input({
   placeholder,
   required,
   error,
+  defaultValue,
 }: InputProps) {
   const { theme } = useTheme();
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 w-full">
       <label
         htmlFor={id}
         className={`text-base font-semibold
@@ -35,6 +37,7 @@ export default function Input({
         id={id}
         placeholder={placeholder}
         required={required}
+        defaultValue={defaultValue}
         className={`w-full px-3 py-1.5 rounded-lg border
         ${
           theme === "dark"
