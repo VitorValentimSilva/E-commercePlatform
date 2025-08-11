@@ -267,7 +267,6 @@ const userSwagger = {
           email: { type: "string", example: "joao@email.com" },
           nameFull: { type: "string", example: "João Silva" },
           namePlace: { type: "string", example: "joaosilva" },
-          password: { type: "string", example: "@Joao123" },
           createdAt: {
             type: "string",
             format: "date-time",

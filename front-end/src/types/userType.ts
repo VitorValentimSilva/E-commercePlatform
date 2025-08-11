@@ -10,11 +10,12 @@ export interface LoginData {
   password: string;
 }
 
-export interface UserType {
+export interface CoreUser {
   id: string;
   nameFull: string;
   namePlace: string;
   email: string;
-  password: string;
-  createdAt: Date;
+  createdAt: Date | string;
 }
+
+export type UserType = CoreUser | null;

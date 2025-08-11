@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 
 const UserService = require("../services/user.service");
+const sanitizeUser = require("../utils/sanitizeUser");
 
 const service = new UserService();
 
@@ -27,7 +28,10 @@ const userController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const p = await service.create(req.body);
-      res.json({ message: "Usuário criado com sucesso", user: p });
+      res.json({
+        message: "Usuário criado com sucesso",
+        user: sanitizeUser(p),
+      });
     } catch (err) {
       next(err);
     }
@@ -61,7 +65,10 @@ const userController = {
     try {
       const { email, password } = req.body;
       const user = await service.login(email, password);
-      res.json({ message: "Login realizado com sucesso", user });
+      res.json({
+        message: "Login realizado com sucesso",
+        user: sanitizeUser(user),
+      });
     } catch (err) {
       next(err);
     }

@@ -3,12 +3,14 @@ import { useTheme } from "../hooks/useTheme";
 import { FiSidebar } from "react-icons/fi";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSidebar } from "../hooks/useSidebar";
+import { useAuthContext } from "../hooks/useAuth";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const { collapsed, toggleSidebar } = useSidebar();
-
+  const { user } = useAuthContext();
+console.log("Header user:", user);
   const routeTitles: Record<string, string> = {
     "/adm": "> Painel",
     "/adm/products": "> Produtos",
@@ -65,6 +67,10 @@ export default function Header() {
           ) : (
             <IoSunnyOutline className="w-5 h-5" />
           )}
+        </button>
+
+        <button>
+            <p>{user?.nameFull}</p>
         </button>
       </div>
     </header>
