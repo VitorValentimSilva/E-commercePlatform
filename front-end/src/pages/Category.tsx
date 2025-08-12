@@ -21,5 +21,5 @@ export default function Category() {
     },
   ];
 
-  return <SectionBaseList cards={infoCardCategory} />;
+  return <SectionBaseList cards={infoCardCategory} nameSection="Categoria" />;
 }

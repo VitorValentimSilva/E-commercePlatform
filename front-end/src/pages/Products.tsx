@@ -22,5 +22,5 @@ export default function Products() {
     },
   ];
 
-  return <SectionBaseList cards={infoCardProducts} />;
+  return <SectionBaseList cards={infoCardProducts} nameSection="Produtos" />;
 }
