@@ -1,4 +1,5 @@
 const userSwagger = require("../routes/user.swagger");
+const categorySwagger = require("../routes/category.swagger");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -8,13 +9,15 @@ const swaggerDefinition = {
     description: "Documentação da API do E-commerce Platform",
   },
   servers: [{ url: "http://localhost:3000" }],
-  tags: [...userSwagger.tags],
+  tags: [...userSwagger.tags, ...categorySwagger.tags],
   paths: {
     ...userSwagger,
+    ...categorySwagger,
   },
   components: {
     schemas: {
       ...userSwagger.components.schemas,
+      ...categorySwagger.components.schemas,
     },
   },
 };
