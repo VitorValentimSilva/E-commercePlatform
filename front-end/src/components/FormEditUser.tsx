@@ -77,9 +77,32 @@ export default function FormEditUser() {
       alert(result.message);
       setFormErrors({});
       setFormValues((prev) => ({ ...prev, password: "" }));
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      alert("Erro ao atualizar usuário");
+
+      type ErrorWithResponse = {
+        response?: {
+          data?: {
+            errors?: Record<string, string>;
+            message?: string;
+          };
+        };
+      };
+
+      if (typeof error === "object" && error !== null && "response" in error) {
+        const err = error as ErrorWithResponse;
+        const data = err.response?.data;
+
+        if (data?.errors && typeof data.errors === "object") {
+          setFormErrors(data.errors);
+        } else if (data?.message) {
+          setFormErrors({ general: data.message });
+        } else {
+          setFormErrors({ general: "Erro ao atualizar usuário" });
+        }
+      } else {
+        setFormErrors({ general: "Erro ao atualizar usuário" });
+      }
     } finally {
       setIsSubmitting(false);
     }
