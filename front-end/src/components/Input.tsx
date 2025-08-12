@@ -7,7 +7,8 @@ interface InputProps {
   placeholder?: string;
   required?: boolean;
   error?: string;
-  defaultValue?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
@@ -17,7 +18,8 @@ export default function Input({
   placeholder,
   required,
   error,
-  defaultValue,
+  value,
+  onChange,
 }: InputProps) {
   const { theme } = useTheme();
 
@@ -37,7 +39,8 @@ export default function Input({
         id={id}
         placeholder={placeholder}
         required={required}
-        defaultValue={defaultValue}
+        value={value}
+        onChange={onChange}
         className={`w-full px-3 py-1.5 rounded-lg border
         ${
           theme === "dark"

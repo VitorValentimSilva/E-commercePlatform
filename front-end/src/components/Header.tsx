@@ -68,7 +68,7 @@ export default function Header() {
           className={`text-lg font-medium
           ${theme === "dark" ? "text-TextDarkTheme" : "text-TextLightTheme"}`}
         >
-          <NavLink to="/">Início </NavLink>
+          <NavLink to="/adm">Início </NavLink>
           {currentTitle}
         </p>
       </div>
@@ -145,7 +145,7 @@ export default function Header() {
 
               <button
                 onClick={() => navigate("/adm/profile")}
-                className={`flex items-center gap-3 w-full px-4 py-2
+                className={`flex items-center gap-3 w-full px-4 py-2 cursor-pointer
                 ${
                   theme === "dark"
                     ? "text-TextDarkTheme hover:bg-SecondaryDarkTheme/20"
@@ -156,7 +156,7 @@ export default function Header() {
               </button>
               <button
                 onClick={handleLogout}
-                className={`flex items-center gap-3 w-full px-4 py-2
+                className={`flex items-center gap-3 w-full px-4 py-2 cursor-pointer
                 ${
                   theme === "dark"
                     ? "text-TextDarkTheme hover:bg-SecondaryDarkTheme/20"

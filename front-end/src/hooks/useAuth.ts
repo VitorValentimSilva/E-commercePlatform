@@ -22,7 +22,15 @@ export function useAuth() {
     return res.data;
   }
 
-  return { register, login, deleteUser };
+  async function updateUser(
+    id: number,
+    data?: unknown
+  ): Promise<{ message: string }> {
+    const res = await api.put(`/user/${id}`, data);
+    return res.data;
+  }
+
+  return { register, login, deleteUser, updateUser };
 }
 
 export function useAuthContext() {

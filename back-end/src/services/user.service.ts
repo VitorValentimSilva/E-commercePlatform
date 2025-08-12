@@ -27,6 +27,10 @@ class UserService {
     id: number,
     data: Partial<Omit<ReturnType<typeof prisma.user.update>, "id">>
   ): Promise<ReturnType<typeof prisma.user.update>> {
+    if ("password" in data && !data.password) {
+      delete data.password;
+    }
+    
     return prisma.user.update({
       where: { id: Number(id) },
       data,

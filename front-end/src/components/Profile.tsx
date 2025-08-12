@@ -101,8 +101,8 @@ export default function Profile() {
           className={`p-6 rounded-lg border
             ${
               theme === "dark"
-                ? "bg-BackgroundDarkTheme border-SurfaceLightTheme/40"
-                : "bg-BackgroundLightTheme border-SurfaceDarkTheme/40"
+                ? "bg-SurfaceDarkTheme border-SurfaceLightTheme/40"
+                : "bg-SurfaceLightTheme border-SurfaceDarkTheme/40"
             }`}
         >
           {selectedTab === "Perfil" && (

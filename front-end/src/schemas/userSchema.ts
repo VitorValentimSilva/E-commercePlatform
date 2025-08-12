@@ -19,3 +19,14 @@ export const registerSchema = z
     message: "As senhas não coincidem",
     path: ["confirmPassword"],
   });
+
+export const updateUserSchema = z.object({
+  nameFull: z.string().min(6, "Nome completo é obrigatório"),
+  namePlace: z.string().min(4, "Nome da loja é obrigatório"),
+  email: z.email("Email inválido"),
+  password: z
+    .string()
+    .min(6, "Senha deve ter pelo menos 6 caracteres")
+    .optional()
+    .or(z.literal("")),
+});
