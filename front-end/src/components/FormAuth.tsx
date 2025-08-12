@@ -4,6 +4,7 @@ import Input from "./Input";
 import { useAuth, useAuthContext } from "../hooks/useAuth";
 import { useState } from "react";
 import { formAuthHandler } from "../handlers/formAuthHandler";
+import Spinner from "./Spinner";
 
 interface FormAuthProps {
   title: string;
@@ -17,6 +18,7 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
   const { setUser } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div
@@ -50,7 +52,14 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
       <Form
         method={type === "login" ? "post" : "get"}
         onSubmit={(e) =>
-          formAuthHandler(e, type, { login, register, setUser }, setFormErrors, navigate)
+          formAuthHandler(
+            e,
+            type,
+            { login, register, setUser },
+            setFormErrors,
+            navigate,
+            setIsLoading
+          )
         }
         className="w-full my-6 flex flex-col gap-7"
       >
@@ -137,14 +146,25 @@ export default function FormAuth({ title, description, type }: FormAuthProps) {
         <div>
           <button
             type="submit"
+            disabled={isLoading}
             className={`cursor-pointer py-1.5 rounded-lg font-semibold w-full
             ${
               theme === "dark"
                 ? "bg-PrimaryDarkTheme text-TextDarkTheme hover:bg-PrimaryDarkTheme/80"
                 : "bg-PrimaryLightTheme text-TextLightTheme hover:bg-PrimaryLightTheme/80"
-            }`}
+            }
+            ${isLoading ? "opacity-70 cursor-not-allowed" : ""}
+            `}
           >
-            {type === "login" ? "Login" : "Criar Conta"}
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <Spinner />
+              </div>
+            ) : type === "login" ? (
+              "Login"
+            ) : (
+              "Criar Conta"
+            )}
           </button>
         </div>
       </Form>

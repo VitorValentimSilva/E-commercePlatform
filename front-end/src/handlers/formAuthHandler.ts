@@ -15,9 +15,11 @@ export async function formAuthHandler(
     setUser: (user: UserType | null) => void;
   },
   setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-  navigate: (path: string) => void
+  navigate: (path: string) => void,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   event.preventDefault();
+  setIsLoading(true);
   const formData = new FormData(event.currentTarget);
   const data = Object.fromEntries(formData.entries());
 
@@ -79,5 +81,7 @@ export async function formAuthHandler(
     } else {
       setFormErrors({ general: "Erro inesperado. Tente novamente." });
     }
+  } finally {
+    setIsLoading(false);
   }
 }

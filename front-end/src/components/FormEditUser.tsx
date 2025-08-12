@@ -5,13 +5,14 @@ import { useTheme } from "../hooks/useTheme";
 import { updateUserSchema } from "../schemas/userSchema";
 import { useState } from "react";
 import z from "zod";
+import Spinner from "./Spinner";
 
 export default function FormEditUser() {
   const { theme } = useTheme();
   const { user } = useAuthContext();
   const { updateUser } = useAuth();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formValues, setFormValues] = useState({
     nameFull: user?.user.nameFull || "",
     namePlace: user?.user.namePlace || "",
@@ -42,6 +43,8 @@ export default function FormEditUser() {
 
     if (!user?.user?.id) return;
 
+    setIsSubmitting(true);
+
     const parsed = updateUserSchema.safeParse(formValues);
 
     if (!parsed.success) {
@@ -60,6 +63,7 @@ export default function FormEditUser() {
       }
 
       setFormErrors(formattedErrors);
+      setIsSubmitting(false);
       return;
     }
 
@@ -68,8 +72,7 @@ export default function FormEditUser() {
       if (!dataToSend.password) {
         delete dataToSend.password;
       }
-      console.log(user.user.id);
-      console.log(dataToSend);
+
       const result = await updateUser(user.user.id, dataToSend);
       alert(result.message);
       setFormErrors({});
@@ -77,6 +80,8 @@ export default function FormEditUser() {
     } catch (error) {
       console.error(error);
       alert("Erro ao atualizar usuário");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -143,16 +148,17 @@ export default function FormEditUser() {
       <div className="flex justify-end">
         <button
           type="submit"
-          disabled={!isFormChanged()}
+          disabled={!isFormChanged() || isSubmitting}
           className={`rounded-lg px-6 py-2 text-base font-semibold transition
           ${
-            isFormChanged()
+            isFormChanged() && !isSubmitting
               ? theme === "dark"
                 ? "bg-PrimaryDarkTheme/70 text-TextDarkTheme cursor-pointer"
                 : "bg-PrimaryLightTheme/70 text-TextLightTheme cursor-pointer"
               : "bg-BackgroundLightTheme/30 cursor-not-allowed text-TextLightTheme"
-          }`}
+          } flex items-center justify-center gap-2`}
         >
+          {isSubmitting ? <Spinner /> : null}
           Salvar Alterações
         </button>
       </div>
