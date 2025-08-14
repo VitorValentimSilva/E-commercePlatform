@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTheme } from "../hooks/useTheme";
 
 interface InputProps {
@@ -24,6 +25,17 @@ export default function Input({
   onChange,
 }: InputProps) {
   const { theme } = useTheme();
+  const [fileName, setFileName] = useState<string>("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
+    } else {
+      setFileName("");
+    }
+
+    onChange?.(e);
+  };
 
   return (
     <div className="flex flex-col gap-1 w-full">
@@ -37,14 +49,17 @@ export default function Input({
               : "text-TextLightTheme border-SurfaceDarkTheme/60"
           }`}
         >
-          <span className="text-base opacity-80">{placeholder}</span>
+          <span className="text-base opacity-80">
+            {fileName || placeholder}
+          </span>
           <input
             id={id}
             name={id}
             type="file"
             className="hidden"
-            onChange={onChange}
+            onChange={handleFileChange}
             required={required}
+            accept="image/*"
           />
         </label>
       ) : type === "checkbox" ? (
