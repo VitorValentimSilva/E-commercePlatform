@@ -66,11 +66,11 @@ export default function Input({
             />
             <div
               className={`w-10 h-5 rounded-full transition-colors duration-300
-                ${
-                  theme === "dark"
-                    ? "bg-gray-700 peer-checked:bg-purple-500"
-                    : "bg-gray-300 peer-checked:bg-purple-600"
-                }`}
+              ${
+                theme === "dark"
+                  ? "bg-gray-700 peer-checked:bg-purple-500"
+                  : "bg-gray-300 peer-checked:bg-purple-600"
+              }`}
             ></div>
             <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-black rounded-full transition-transform duration-300 peer-checked:translate-x-5"></div>
           </div>
