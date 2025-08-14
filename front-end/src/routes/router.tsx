@@ -7,6 +7,7 @@ import Category from "../pages/Category";
 import PagesAuth from "../pages/PagesAuth";
 import RequireAuth from "../components/RequireAuth";
 import Profile from "../components/Profile";
+import Create from "../pages/Create";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: "category", element: <Category /> },
       { path: "profile", element: <Profile /> },
+      { path: "create", element: <Create /> },
     ],
   },
 ]);

@@ -3,6 +3,7 @@ import { useTheme } from "../hooks/useTheme";
 import Input from "./Input";
 import { CgTrash } from "react-icons/cg";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 interface FilterFieldsProps {
   name: string;
@@ -54,8 +55,7 @@ export default function FilterFields({ name }: FilterFieldsProps) {
 
             <p
               onClick={() => setSelected((prev) => !prev)}
-              className={`cursor-default
-              `}
+              className="cursor-default"
             >
               Selecionar tudo
             </p>
@@ -79,15 +79,15 @@ export default function FilterFields({ name }: FilterFieldsProps) {
 
             <button
               className={`py-1 px-2 rounded-lg flex items-center gap-1
-                ${
-                  selected
-                    ? theme === "dark"
-                      ? "bg-RedDarkTheme hover:opacity-80 cursor-pointer"
-                      : "bg-RedLightTheme hover:opacity-80 cursor-pointer"
-                    : theme === "dark"
-                    ? "bg-RedDarkTheme opacity-60"
-                    : "bg-RedLightTheme opacity-60"
-                }`}
+              ${
+                selected
+                  ? theme === "dark"
+                    ? "bg-RedDarkTheme hover:opacity-80 cursor-pointer"
+                    : "bg-RedLightTheme hover:opacity-80 cursor-pointer"
+                  : theme === "dark"
+                  ? "bg-RedDarkTheme opacity-60"
+                  : "bg-RedLightTheme opacity-60"
+              }`}
             >
               <CgTrash className="w-4.5 h-4.5" /> Deletar
             </button>
@@ -95,16 +95,18 @@ export default function FilterFields({ name }: FilterFieldsProps) {
         </div>
 
         <div>
-          <button
+          <NavLink
+            to="/adm/create"
+            state={{ name }}
             className={`cursor-pointer font-semibold text-base py-1.5 px-6 rounded-lg flex items-center gap-2 hover:opacity-75 w-max
-          ${
-            theme === "dark"
-              ? "bg-PrimaryDarkTheme/70 text-TextDarkTheme"
-              : "bg-PrimaryLightTheme/70 text-TextLightTheme"
-          }`}
+            ${
+              theme === "dark"
+                ? "bg-PrimaryDarkTheme/70 text-TextDarkTheme"
+                : "bg-PrimaryLightTheme/70 text-TextLightTheme"
+            }`}
           >
             <FiPlus className="w-6 h-6" /> Criar {name}
-          </button>
+          </NavLink>
         </div>
       </div>
     </div>

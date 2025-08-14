@@ -6,6 +6,10 @@ import { useSidebar } from "../hooks/useSidebar";
 import { useAuthContext } from "../hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
 
+interface LocationState {
+  name?: string;
+}
+
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
@@ -14,11 +18,26 @@ export default function Header() {
   const { user, setUser } = useAuthContext();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { name } = (location.state as LocationState) || {};
+  const nameToPath: Record<string, string> = {
+    Categoria: "category",
+    Produtos: "products",
+  };
+  const pageName = nameToPath[name ?? ""] ?? "";
 
-  const routeTitles: Record<string, string> = {
+  const routeTitles: Record<string, React.ReactNode> = {
     "/adm": "> Painel",
     "/adm/products": "> Produtos",
     "/adm/category": "> Categoria",
+    "/adm/create": name ? (
+      <>
+        {" > "}
+        <NavLink to={`/adm/${pageName}`}>{name}</NavLink>
+        {` > Criar ${name}`}
+      </>
+    ) : (
+      "> Criar"
+    ),
   };
 
   const currentTitle = routeTitles[location.pathname] || "";
