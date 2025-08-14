@@ -2,9 +2,6 @@ import z from "zod";
 
 export const categorySchema = z.object({
   name: z.string().min(4, "Nome é obrigatório"),
-  parentId: z.number().int().positive().optional().nullable(),
-  path: z.string().optional(),
-  level: z.number().int().min(0).optional(),
   order: z.number().int().min(0).optional(),
   isActive: z.boolean().optional(),
   imageUrl: z.url().optional().nullable(),

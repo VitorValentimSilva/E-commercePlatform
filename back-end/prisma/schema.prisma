@@ -25,12 +25,7 @@ model User {
 
 model Category {
   id            Int        @id @default(autoincrement())
-  name          String
-  parentId      Int? 
-  parent        Category?  @relation("CategoryChildren", fields: [parentId], references: [id])
-  children      Category[] @relation("CategoryChildren")
-  path          String?   
-  level         Int        @default(0)
+  name          String 
   order         Int        @default(0)
   isActive      Boolean    @default(true)
   imageUrl      String?
@@ -39,9 +34,6 @@ model Category {
   products      Product[]  @relation("ProductCategories")
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-
-  @@index([parentId])
-  @@index([path])
 }
 
 model Product {

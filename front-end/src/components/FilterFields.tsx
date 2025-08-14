@@ -4,14 +4,32 @@ import Input from "./Input";
 import { CgTrash } from "react-icons/cg";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import type { ListCategory } from "../types/categoryType";
 
 interface FilterFieldsProps {
   name: string;
+  options: ListCategory[];
+  selectedItems: number[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export default function FilterFields({ name }: FilterFieldsProps) {
+export default function FilterFields({
+  name,
+  options,
+  selectedItems,
+  setSelectedItems,
+}: FilterFieldsProps) {
   const { theme } = useTheme();
-  const [selected, setSelected] = useState(false);
+  const [selectedAll, setSelectedAll] = useState(false);
+
+  const handleSelectAll = () => {
+    if (selectedAll) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(options.map((item) => item.id));
+    }
+    setSelectedAll(!selectedAll);
+  };
 
   return (
     <div
@@ -38,25 +56,20 @@ export default function FilterFields({ name }: FilterFieldsProps) {
         >
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setSelected((prev) => !prev)}
+              onClick={handleSelectAll}
               className={`cursor-pointer border rounded-full flex items-center justify-center
               ${
-                selected
-                  ? theme === "dark"
-                    ? "bg-PrimaryDarkTheme text-white border-PrimaryDarkTheme"
-                    : "bg-PrimaryLightTheme text-white border-PrimaryLightTheme"
-                  : theme === "dark"
-                  ? "border-PrimaryDarkTheme p-2"
+                selectedAll || selectedItems.length === options.length
+                  ? "bg-PrimaryLightTheme text-white border-PrimaryLightTheme"
                   : "border-PrimaryLightTheme p-2"
               }`}
             >
-              {selected && <FiCheck className="w-4 h-4" />}
+              {(selectedAll || selectedItems.length === options.length) && (
+                <FiCheck className="w-4 h-4" />
+              )}
             </button>
 
-            <p
-              onClick={() => setSelected((prev) => !prev)}
-              className="cursor-default"
-            >
+            <p onClick={handleSelectAll} className="cursor-default">
               Selecionar tudo
             </p>
           </div>
@@ -65,7 +78,7 @@ export default function FilterFields({ name }: FilterFieldsProps) {
             <button
               className={`py-1 px-2 rounded-lg
               ${
-                selected
+                selectedItems.length > 0
                   ? theme === "dark"
                     ? "bg-BackgroundLightTheme/20 hover:opacity-80 cursor-pointer"
                     : "bg-BackgroundDarkTheme/20 hover:opacity-80 cursor-pointer"
@@ -73,6 +86,7 @@ export default function FilterFields({ name }: FilterFieldsProps) {
                   ? "bg-BackgroundLightTheme/20 opacity-60"
                   : "bg-BackgroundDarkTheme/20 opacity-60"
               }`}
+              disabled={selectedItems.length === 0}
             >
               Desativar
             </button>
@@ -80,7 +94,7 @@ export default function FilterFields({ name }: FilterFieldsProps) {
             <button
               className={`py-1 px-2 rounded-lg flex items-center gap-1
               ${
-                selected
+                selectedItems.length > 0
                   ? theme === "dark"
                     ? "bg-RedDarkTheme hover:opacity-80 cursor-pointer"
                     : "bg-RedLightTheme hover:opacity-80 cursor-pointer"
@@ -88,6 +102,7 @@ export default function FilterFields({ name }: FilterFieldsProps) {
                   ? "bg-RedDarkTheme opacity-60"
                   : "bg-RedLightTheme opacity-60"
               }`}
+              disabled={selectedItems.length === 0}
             >
               <CgTrash className="w-4.5 h-4.5" /> Deletar
             </button>

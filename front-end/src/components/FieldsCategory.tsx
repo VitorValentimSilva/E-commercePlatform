@@ -1,28 +1,9 @@
-import { useEffect, useState } from "react";
-import { useCategory } from "../hooks/useCategory";
 import { useTheme } from "../hooks/useTheme";
 import Input from "./Input";
 import Textarea from "./Textarea";
-import type { CategoryAll } from "../types/categoryType";
-import Select from "./Select";
 
 export default function FieldsCategory() {
   const { theme } = useTheme();
-  const { getAllCategory } = useCategory();
-  const [categories, setCategories] = useState<CategoryAll[]>([]);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const data = await getAllCategory();
-        setCategories(data);
-      } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
-      }
-    }
-
-    fetchCategories();
-  }, [getAllCategory]);
 
   return (
     <div className="flex justify-between gap-10">
@@ -42,19 +23,20 @@ export default function FieldsCategory() {
             Informações Básicas
           </h2>
 
-          <div className="flex flex-col gap-4">
-            <Select
-              options={categories}
-              placeholder="Nenhuma"
-              label="Categoria Pai"
-            />
-
+          <div className="flex gap-4">
             <Input
               name="Nome da Categoria"
               id="nameCategory"
               type="text"
               placeholder="Digite o nome da categoria"
               required={true}
+            />
+
+            <Input
+              name="Ordem de Exibição"
+              id="order"
+              type="number"
+              placeholder="Digite a ordem de exibição"
             />
           </div>
         </div>

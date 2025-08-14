@@ -20,9 +20,6 @@ const categorySwagger = {
                     {
                       id: 1,
                       name: "Eletrônicos",
-                      parentId: null,
-                      path: "eletronicos",
-                      level: 0,
                       order: 1,
                       isActive: true,
                       imageUrl: "https://exemplo.com/imagens/eletronicos.jpg",
@@ -34,9 +31,6 @@ const categorySwagger = {
                     {
                       id: 2,
                       name: "Celulares",
-                      parentId: 1,
-                      path: "eletronicos/celulares",
-                      level: 1,
                       order: 1,
                       isActive: true,
                       imageUrl: "https://exemplo.com/imagens/celulares.jpg",
@@ -226,9 +220,6 @@ const categorySwagger = {
         properties: {
           id: { type: "integer", example: 1 },
           name: { type: "string", example: "Eletrônicos" },
-          parentId: { type: "integer", nullable: true, example: null },
-          path: { type: "string", nullable: true, example: "eletronicos" },
-          level: { type: "integer", example: 0 },
           order: { type: "integer", example: 1 },
           isActive: { type: "boolean", example: true },
           imageUrl: {
@@ -255,9 +246,6 @@ const categorySwagger = {
         type: "object",
         properties: {
           name: { type: "string", example: "Eletrônicos" },
-          parentId: { type: "integer", nullable: true, example: null },
-          path: { type: "string", example: "eletronicos" },
-          level: { type: "integer", example: 0 },
           order: { type: "integer", example: 1 },
           isActive: { type: "boolean", example: true },
           imageUrl: {

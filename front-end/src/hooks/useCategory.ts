@@ -1,4 +1,8 @@
-import type { CategoryAll } from "../types/categoryType";
+import type {
+  CategoryAll,
+  ListCategory,
+  SubCategory,
+} from "../types/categoryType";
 import { api } from "../utils/api";
 
 export function useCategory() {
@@ -7,5 +11,15 @@ export function useCategory() {
     return res.data as CategoryAll[];
   }
 
-  return { getAllCategory };
+  async function getSubCategory(): Promise<SubCategory[]> {
+    const res = await api.get("/category");
+    return res.data as SubCategory[];
+  }
+
+  async function getListCategory(): Promise<ListCategory[]> {
+    const res = await api.get("/category");
+    return res.data as ListCategory[];
+  }
+
+  return { getAllCategory, getSubCategory, getListCategory };
 }
