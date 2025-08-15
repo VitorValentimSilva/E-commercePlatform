@@ -37,11 +37,57 @@ model Category {
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
-  title       String
-  description String?
-  price       Float
-  stock       Int       @default(0)
-  categories  Category[] @relation("ProductCategories")
-  createdAt   DateTime  @default(now())
+  id              Int        @id @default(autoincrement())
+  sku             String     @unique
+  gtin            String?    @unique
+  slug            String     @unique
+  title           String
+  shortDescription String?  
+  description     String?    
+  price           Float
+  promotionalPrice Float?     
+  promotionalStart DateTime?  
+  promotionalEnd   DateTime?  
+  stock           Int        @default(0)
+  minStock        Int?       
+  unit            String?    
+  brand           String?
+  model           String?
+  color           String?
+  size            String?
+  material        String?
+  weight          Float?    
+  width           Float?    
+  height          Float?     
+  length          Float?     
+  mainImage       String?   
+  isActive        Boolean    @default(true)
+  isFeatured      Boolean    @default(false) 
+  type            ProductType @default(PHYSICAL)
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  categories      Category[] @relation("ProductCategories")
+  images          Image[]    
+  tags            Tag[]      @relation("ProductTags")
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  url       String
+  alt       String?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Tag {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[] @relation("ProductTags")
+}
+
+enum ProductType {
+  PHYSICAL
+  DIGITAL
 }
