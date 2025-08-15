@@ -1,4 +1,5 @@
 import type {
+  CategoryActive,
   CategoryAll,
   ListCategory,
   SubCategory,
@@ -21,5 +22,10 @@ export function useCategory() {
     return res.data as ListCategory[];
   }
 
-  return { getAllCategory, getSubCategory, getListCategory };
+  async function getCategoryActive(): Promise<CategoryActive[]> {
+    const res = await api.get("category");
+    return res.data as CategoryActive[];
+  }
+
+  return { getAllCategory, getSubCategory, getListCategory, getCategoryActive };
 }

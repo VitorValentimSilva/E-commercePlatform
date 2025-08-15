@@ -63,19 +63,23 @@ export default function SectionBaseList({
         ))}
       </div>
 
-      <FilterFields
-        name={nameSection}
-        options={categories}
-        selectedItems={selectedItems}
-        setSelectedItems={setSelectedItems}
-      />
+      {nameSection.toLowerCase() === "categoria" && (
+        <>
+          <FilterFields
+            name={nameSection}
+            options={categories}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
 
-      <List
-        thList={getTableHeaders()}
-        options={categories}
-        selectedItems={selectedItems}
-        setSelectedItems={setSelectedItems}
-      />
+          <List
+            thList={getTableHeaders()}
+            options={categories}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
+        </>
+      )}
     </section>
   );
 }

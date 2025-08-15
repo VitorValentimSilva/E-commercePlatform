@@ -22,3 +22,7 @@ export interface ListCategory {
   isActive: boolean;
   imageUrl: string;
 }
+
+export interface CategoryActive {
+  isActive: boolean;
+}
